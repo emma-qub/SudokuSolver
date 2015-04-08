@@ -1,8 +1,10 @@
 SOURCES += \
     main.cpp \
-    Cell.cpp
+    Cell.cpp \
+    Grid.cpp
 
 HEADERS += \
-    Cell.h
+    Cell.h \
+    Grid.h
 
 CONFIG += C++11
