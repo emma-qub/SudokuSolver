@@ -93,9 +93,9 @@ std::ostream& operator<<(std::ostream& os, const Grid& grid) {
         for (int k = 3*(i%3); k < 3*(i%3)+3; ++k) {
           cell->getRemainingChoices().at(k) ? os << k+1 : os << " ";
         }
-        if (j == 8)
-          os << "|";
       }
+      if (j == 8)
+        os << "|";
     }
     if ((i+1)%9 == 0)
       os << "\n+---------------+---------------+---------------+\n";
