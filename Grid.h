@@ -17,6 +17,8 @@ public:
   std::vector<Cell*> getCaseFromCell(Cell* cell) const;
 
   void fillCell(int i, int j, int value);
+  void fillCell(Cell* cell, int value);
+  bool fillCells(void);
 
   friend std::ostream& operator<<(std::ostream& os, const Grid& grid);
 

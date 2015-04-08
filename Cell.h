@@ -13,12 +13,14 @@ public:
 
   void removeChoice(int choice);
   void insertChoice(int choice);
+  std::vector<int> getChoices(void) const;
 
   inline int getValue(void) const { return _value; }
   inline void fill(int value) { _value = value; }
   inline void empty(void) { _value = -1; }
 
   bool isFilled(void) const;
+  bool hasOnlyOneChoice(void) const;
 
 private:
   std::vector<bool> _remainingChoices;

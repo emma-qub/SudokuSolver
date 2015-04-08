@@ -56,5 +56,12 @@ int main(int argc, char** argv) {
 
   std::cerr << grid << std::endl;
 
+  bool worked;
+  do {
+    worked = grid.fillCells();
+  } while(worked);
+
+  std::cerr << grid << std::endl;
+
   return EXIT_SUCCESS;
 }

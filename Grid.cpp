@@ -3,7 +3,7 @@
 Grid::Grid(void) {
   for (int i = 0; i < 9; ++i) {
     std::vector<Cell*> line;
-    for (int i = 0; i < 9; ++i) {
+    for (int j = 0; j < 9; ++j) {
       line.push_back(new Cell);
     }
     _cells.push_back(line);
@@ -58,6 +58,10 @@ std::vector<Cell*> Grid::getCaseFromCell(Cell* cell) const {
 
 void Grid::fillCell(int i, int j, int value) {
   Cell* cell = _cells.at(i).at(j);
+  fillCell(cell, value);
+}
+
+void Grid::fillCell(Cell* cell, int value) {
   cell->fill(value);
 
   for (Cell* currentCell: getLineFromCell(cell)) {
@@ -71,6 +75,23 @@ void Grid::fillCell(int i, int j, int value) {
   for (Cell* currentCell: getCaseFromCell(cell)) {
     currentCell->removeChoice(value);
   }
+}
+
+bool Grid::fillCells(void) {
+  bool worked = false;
+
+  for (int i = 0; i < 9; ++i) {
+    for (int j = 0; j < 9; ++j) {
+      Cell* cell = _cells.at(i).at(j);
+      if (!cell->isFilled() && cell->hasOnlyOneChoice()) {
+        worked = true;
+        std::cerr << "(" << i << "," << j << ") " << cell->getChoices().at(0) << std::endl;
+        fillCell(cell, cell->getChoices().at(0));
+      }
+    }
+  }
+
+  return worked;
 }
 
 std::ostream& operator<<(std::ostream& os, const Grid& grid) {
