@@ -29,7 +29,8 @@ public:
   void fillCell(Cell* cell, int value);
   bool fillCells(void);
 
-  void fileOnlyChoice(int i, int j, int value, CellsSetType cellsSetType);
+  bool fillOnlyChoice(int i, int j, int value, CellsSetType cellsSetType);
+  bool fillOnlyChoices(void);
 
   friend std::ostream& operator<<(std::ostream& os, const Grid& grid);
 

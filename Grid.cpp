@@ -106,7 +106,7 @@ bool Grid::fillCells(void) {
   return worked;
 }
 
-void Grid::fileOnlyChoice(int i, int j, int value, CellsSetType cellsSetType) {
+bool Grid::fillOnlyChoice(int i, int j, int value, CellsSetType cellsSetType) {
   std::vector<Cell*> cells;
   switch (cellsSetType) {
   case CellsSetType::Line: {
@@ -128,16 +128,39 @@ void Grid::fileOnlyChoice(int i, int j, int value, CellsSetType cellsSetType) {
 
   int countValues = 0;
   for (Cell* cell: cells) {
-    if (!cell->isFilled() && cell->getChoices().at(value-1))
+    if (!cell->isFilled() && cell->getRemainingChoices().at(value-1))
       ++countValues;
   }
 
   if (countValues == 1) {
     for (Cell* cell: cells) {
-      if (!cell->isFilled() && cell->getChoices().at(value-1))
+      if (!cell->isFilled() && cell->getRemainingChoices().at(value-1)) {
+        std::cerr << "(" << i << "," << j << ") " << value << std::endl;
         fillCell(cell, value);
+        return true;
+      }
     }
   }
+
+  return false;
+}
+
+bool Grid::fillOnlyChoices(void) {
+  bool worked = false;
+  for (int i = 0; i < 9; ++i) {
+    for (int j = 0; j < 9; ++j) {
+      Cell* cell = _cells.at(i).at(j);
+      if (!cell->isFilled()) {
+        for (int value: cell->getChoices()) {
+          worked = worked || fillOnlyChoice(i, j, value, CellsSetType::Line);
+          worked = worked || fillOnlyChoice(i, j, value, CellsSetType::Column);
+          worked = worked || fillOnlyChoice(i, j, value, CellsSetType::Block);
+        }
+      }
+    }
+  }
+
+  return worked;
 }
 
 std::ostream& operator<<(std::ostream& os, const Grid& grid) {
