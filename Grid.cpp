@@ -21,6 +21,10 @@ std::vector<Cell*> Grid::getLineFromCell(Cell* cell) const {
   int j = 0;
   getCellCoordinates(cell, i, j);
 
+  return getLineFromCellCoordinate(i);
+}
+
+std::vector<Cell*> Grid::getLineFromCellCoordinate(int i) const {
   return _cells.at(i);
 }
 
@@ -29,6 +33,10 @@ std::vector<Cell*> Grid::getColumnFromCell(Cell* cell) const {
   int j = 0;
   getCellCoordinates(cell, i, j);
 
+  return getColumnFromCellCoordinate(j);
+}
+
+std::vector<Cell*> Grid::getColumnFromCellCoordinate(int j) const {
   std::vector<Cell*> column;
 
   for (int k = 0; k < 9; ++k) {
@@ -43,6 +51,10 @@ std::vector<Cell*> Grid::getCaseFromCell(Cell* cell) const {
   int j = 0;
   getCellCoordinates(cell, i, j);
 
+  return getCaseFromCellCoordinate(i, j);
+}
+
+std::vector<Cell*> Grid::getCaseFromCellCoordinate(int i, int j) const {
   std::vector<Cell*> res;
 
   int fstLine = i/3;
@@ -92,6 +104,40 @@ bool Grid::fillCells(void) {
   }
 
   return worked;
+}
+
+void Grid::fileOnlyChoice(int i, int j, int value, CellsSetType cellsSetType) {
+  std::vector<Cell*> cells;
+  switch (cellsSetType) {
+  case CellsSetType::Line: {
+    cells = getLineFromCellCoordinate(i);
+    break;
+  }
+  case CellsSetType::Column: {
+    cells = getColumnFromCellCoordinate(j);
+    break;
+  }
+  case CellsSetType::Block: {
+    cells = getCaseFromCellCoordinate(i, j);
+    break;
+  }
+  default: {
+    break;
+  }
+  }
+
+  int countValues = 0;
+  for (Cell* cell: cells) {
+    if (!cell->isFilled() && cell->getChoices().at(value-1))
+      ++countValues;
+  }
+
+  if (countValues == 1) {
+    for (Cell* cell: cells) {
+      if (!cell->isFilled() && cell->getChoices().at(value-1))
+        fillCell(cell, value);
+    }
+  }
 }
 
 std::ostream& operator<<(std::ostream& os, const Grid& grid) {
