@@ -18,6 +18,8 @@ public:
   Grid(void);
   virtual ~Grid(void);
 
+  inline Cell* getCell(int i, int j) const { return _cells.at(i).at(j); }
+
   std::vector<Cell*> getLineFromCell(Cell* cell) const;
   std::vector<Cell*> getLineFromCellCoordinate(int i) const;
   std::vector<Cell*> getColumnFromCell(Cell* cell) const;
@@ -36,7 +38,6 @@ public:
 
 private:
   void getCellCoordinates(Cell* cell, int& i, int& j) const;
-  Cell* getCell(int i, int j) const;
 
 private:
   std::vector<std::vector<Cell*>> _cells;
