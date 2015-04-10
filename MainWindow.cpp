@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent):
 
   setWindowTitle("Sudoku Solver");
   setWindowState(Qt::WindowMaximized);
+  setWindowIcon(QIcon("../SudokuSolver/icons/windowIcon2.png"));
 }
 
 MainWindow::~MainWindow(void) {
