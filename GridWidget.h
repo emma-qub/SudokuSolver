@@ -12,6 +12,9 @@ public:
   explicit GridWidget(QWidget *parent = NULL);
   virtual ~GridWidget(void);
 
+private:
+  void setCellStyleSheet(void);
+
 signals:
 
 public slots:

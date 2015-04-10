@@ -97,7 +97,6 @@ bool Grid::fillCells(void) {
       Cell* cell = _cells.at(i).at(j);
       if (!cell->isFilled() && cell->hasOnlyOneChoice()) {
         worked = true;
-        std::cerr << "(" << i << "," << j << ") " << cell->getChoices().at(0) << std::endl;
         fillCell(cell, cell->getChoices().at(0));
       }
     }
@@ -135,7 +134,6 @@ bool Grid::fillOnlyChoice(int i, int j, int value, CellsSetType cellsSetType) {
   if (countValues == 1) {
     for (Cell* cell: cells) {
       if (!cell->isFilled() && cell->getRemainingChoices().at(value-1)) {
-        std::cerr << "(" << i << "," << j << ") " << value << std::endl;
         fillCell(cell, value);
         return true;
       }
